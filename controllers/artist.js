@@ -144,7 +144,6 @@ function deleteArtist(req, res) {
     });
 }
 
-
 function uploadImage(req, res) {
     var artistId = req.params.id;
     var file_name = 'No subido...';

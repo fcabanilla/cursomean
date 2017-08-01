@@ -1,13 +1,26 @@
 'use strict'
 const fs = require('fs');
 const path = require('path');
-var bcrypt = require('bcrypt-nodejs');
-var User = require('../models/user');
+const bcrypt = require('bcrypt-nodejs');
+const User = require('../models/user');
 const jwt = require('../services/jwt');
 
 function pruebas(req, res) {
     res.status(200).send({
         message: 'Probando una accion del controlador de usuarios del api rest con Node y Mongo'
+    });
+}
+
+function getImageFile(req, res) {
+    var imageFile = req.params.imageFile;
+    var path_file = './uploads/user/'+imageFile;
+
+    fs.exists(path_file, function (exists) {
+        if (exists) {
+            res.sendFile(path.resolve(path_file));
+        } else {
+            res.status(200).send("LA IMAGEN NO EXITE");
+        }
     });
 }
 
@@ -85,23 +98,6 @@ function loginUser(req, res) {
     });
 }
 
-function updateUser(req, res) {
-    var userId = req.params.id;
-    var update = req.body;
-
-    User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
-        if (err) {
-            res.status(500).send({message: 'Error al actualizar el usuario'});
-        } else {
-            if (!userUpdated) {
-                res.status(404).send({message: 'No se ha podido actualizar el usuario'});
-            } else {
-                res.status(200).send({message: userUpdated});
-            }
-        }
-    });
-}
-
 function uploadImage(req, res) {
     var userId = req.params.id;
     var file_name = 'No subido...';
@@ -135,18 +131,23 @@ function uploadImage(req, res) {
     }
 }
 
-function getImageFile(req, res) {
-    var imageFile = req.params.imageFile;
-    var path_file = './uploads/user/'+imageFile;
+function updateUser(req, res) {
+    var userId = req.params.id;
+    var update = req.body;
 
-    fs.exists(path_file, function (exists) {
-        if (exists) {
-            res.sendFile(path.resolve(path_file));
+    User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+        if (err) {
+            res.status(500).send({message: 'Error al actualizar el usuario'});
         } else {
-
+            if (!userUpdated) {
+                res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+            } else {
+                res.status(200).send({message: userUpdated});
+            }
         }
     });
 }
+
 module.exports = {
     pruebas,
     saveUser,
@@ -155,6 +156,3 @@ module.exports = {
     uploadImage,
     getImageFile
 };
-
-
-// res.status().send({message:});

@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var AlbumSchema = Schema({
     name: String,
     description: String,
+    title: String,
     year: Number,
     image: String,
     artist:{ type: Schema.ObjectId, ref:'Artist'}
