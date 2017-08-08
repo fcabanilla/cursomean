@@ -118,7 +118,7 @@ function uploadImage(req, res) {
                     if (!userUpdated) {
                         res.status(404).send({message: 'No se ha podido actualizar el usuario'});
                     } else {
-                        res.status(200).send({message: userUpdated});
+                        res.status(200).send({image: file_name, user: userUpdated});
                     }
                 }
             });
