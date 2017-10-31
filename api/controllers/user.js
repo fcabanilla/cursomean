@@ -11,6 +11,28 @@ function pruebas(req, res) {
     });
 }
 
+function saveQuestion(req, res) {
+    var user = new User();
+
+    user.name = params.name;
+    user.question = params.question;
+    user.answere = params.answere;
+
+    User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+        if (err) {
+            res.status(500).send({message: 'Error al actualizar el usuario'});
+        } else {
+            if (!userUpdated) {
+                res.status(404).send({message: 'No se ha podido actualizar la pregunta/respuesta'});
+            } else {
+                res.status(200).send({message: userUpdated});
+            }
+        }
+    });
+
+
+}
+
 function getImageFile(req, res) {
     var imageFile = req.params.imageFile;
     var path_file = './uploads/user/'+imageFile;
@@ -154,5 +176,6 @@ module.exports = {
     loginUser,
     updateUser,
     uploadImage,
-    getImageFile
+    getImageFile,
+    saveQuestion
 };
