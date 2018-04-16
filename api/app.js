@@ -14,20 +14,17 @@ var song_routes = require('./routes/song');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-// configuar cabeceras http
-
+// configurar cabeceras http
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Method', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
 
-    next();
-
-
+	next();
 });
 
-// rutas bases
+// rutas base
 app.use('/api', user_routes);
 app.use('/api', artist_routes);
 app.use('/api', album_routes);
